@@ -1,103 +1,123 @@
-# deforestation-archetypes
-Moving beyond binary forest loss detection to uncover interpretable deforestation archetypes through unsupervised learning on event-level spatial morphology.
-
-🌿 Deforestation Archetype Discovery
+# 🌿 Deforestation Archetype Discovery
 
 Unsupervised discovery of deforestation archetypes using event-level spatial morphology and clustering.
 
-📌 Overview
+---
 
-Most global forest monitoring systems detect where and when forest loss occurs, but not what kind of loss it is.
+## Overview
 
-This project moves beyond binary detection by modeling deforestation events as geometric objects and discovering recurring archetypes using unsupervised learning.
+Global forest monitoring systems (e.g., Hansen GFC) detect **where** and **when** forest loss occurs, but not **what kind** of loss it is.
 
-We show that deforestation is not random — it exhibits consistent, interpretable spatial patterns that can be uncovered without labels.
+This project reframes deforestation as an **event-level pattern discovery problem**.  
+Instead of pixel-wise detection, we analyze **connected deforestation events** and uncover recurring **geometric archetypes** using unsupervised learning.
 
-🚀 Key Idea
+---
 
-Event shape encodes the underlying deforestation process.
+## Key Idea
 
-Instead of analyzing individual pixels:
+> Event shape encodes the underlying deforestation process.
 
-We extract event-level patches
-Compute morphological features
-Discover archetypes via clustering
+Different drivers (e.g., agriculture, roads, logging) produce distinct spatial patterns.  
+These patterns can be discovered **without labels** using morphology alone.
 
-These archetypes align with real-world processes such as:
+---
 
-🌲 Agricultural clearing
-🛣️ Roads & infrastructure
-🌿 Selective logging
-🧠 Methodology
-1. Event Extraction
-Input: Hansen Global Forest Change (30m)
-Group connected loss pixels → event patches
-Each patch = one deforestation event
-2. Feature Engineering
+## Method
 
-For each event, compute geometric features:
+### 1. Event Extraction
+- Input: Hansen Global Forest Change (30m)
+- Group connected pixels → **event patches**
+- Each patch = one deforestation event
 
-Feature	Description
-Area	Size of event
-Compactness	Density vs spread
-Eccentricity	Elongation
-Aspect Ratio	Shape stretch
-Edge Density	Boundary complexity
-Mask Fraction	Internal density
-3. Clustering
-Algorithm: HDBSCAN
-No predefined cluster count
-Outliers handled as noise
-📊 Results
-🔹 Archetypes Discovered
-14 distinct clusters
-5.6% noise (unassigned outliers)
-🔹 Feature Space Separation
-Clear separation in UMAP visualization
-Clusters form distinct regions → not random
-🔹 Stability
-Adjusted Rand Index (ARI): ~0.658
-Consistent clusters across multiple runs
-🔹 Learnability
-kNN classification accuracy: 98.24%
-Archetypes are well-separated and predictable
-🔹 Interpretation (Examples)
-Archetype	Likely Process
-Linear	Roads & infrastructure
-Blocky	Agricultural clearing
-Fragmented	Selective logging
+### 2. Feature Engineering
+Compute geometric features for each event:
 
-⚠️ These are interpretations, not labeled ground truth.
+- Area  
+- Compactness  
+- Eccentricity  
+- Aspect Ratio  
+- Edge Density  
+- Mask Fraction  
 
-🔹 Generalization
-Tested on 15,000-event global dataset
-Structure persists (with increased noise)
-Suggests archetypes are not dataset-specific
-🔹 Exploratory Risk Signal
-ROC-AUC: 0.994 (proxy model)
-Some archetypes consistently align with higher-risk signals
-⚠️ Not independent validation (same feature space)
-📈 Example Visualizations
-UMAP projection of archetypes
-Feature distribution boxplots
-Cluster stability heatmap
-Confusion matrix (kNN)
+### 3. Clustering
+- Algorithm: **HDBSCAN**
+- No predefined number of clusters
+- Outliers handled as noise
 
-(See /results or notebook outputs for visuals)
+---
 
-⚠️ Limitations
-No ground-truth driver labels
-Risk model uses proxy labels (not independent)
-Limited geographic diversity in development set
-🔮 Future Work
-Align archetypes with labeled deforestation drivers
-Evaluate across regions, biomes, and time
-Build a benchmark dataset for validation
-Integrate into real-time monitoring pipelines
-🛠️ Tech Stack
-Python
-NumPy / Pandas
-scikit-learn
-HDBSCAN
-UMAP
-Matplotlib / Seaborn
+## Results
+
+- **14 clusters discovered**
+- **5.6% events classified as noise**
+- Clear separation in feature space (UMAP)
+
+### Stability
+- Adjusted Rand Index (ARI): ~0.658  
+- Clusters consistent across runs
+
+### Learnability
+- kNN classification accuracy: **98.24%**
+- Archetypes are well-separated and predictable
+
+### Interpretation (qualitative)
+
+| Archetype   | Likely Process              |
+|------------|---------------------------|
+| Linear     | Roads & infrastructure     |
+| Blocky     | Agricultural clearing      |
+| Fragmented | Selective logging          |
+
+> Note: These are interpretations, not labeled ground truth.
+
+---
+
+## Generalization
+
+- Tested on **15,000-event global dataset**
+- Structure persists (with increased noise)
+- Suggests archetypes are not dataset-specific
+
+---
+
+## Exploratory Risk Model
+
+- ROC-AUC: **0.994**
+- Some archetypes align with higher-risk signals
+
+> ⚠️ Proxy labels derived from same feature space — not independent validation.
+
+---
+
+## Limitations
+
+- No ground-truth driver labels  
+- Risk model is not independently validated  
+- Limited geographic diversity in development data  
+
+---
+
+## Future Work
+
+- Align archetypes with labeled driver data  
+- Test across regions and time  
+- Build benchmark datasets  
+- Integrate into monitoring systems  
+
+---
+
+## Tech Stack
+
+- Python  
+- NumPy, Pandas  
+- scikit-learn  
+- HDBSCAN  
+- UMAP  
+- Matplotlib  
+
+---
+
+## Authors
+
+- Akash Sagi  
+- Sakethram Naidu  
