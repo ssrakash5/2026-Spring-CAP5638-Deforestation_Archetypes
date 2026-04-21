@@ -2,7 +2,7 @@
 
 Unsupervised discovery of deforestation archetypes using event-level spatial morphology and clustering.
 
----
+
 
 ## Overview
 
@@ -11,7 +11,7 @@ Global forest monitoring systems (e.g., Hansen GFC) detect **where** and **when*
 This project reframes deforestation as an **event-level pattern discovery problem**.  
 Instead of pixel-wise detection, we analyze **connected deforestation events** and uncover recurring **geometric archetypes** using unsupervised learning.
 
----
+
 
 ## Key Idea
 
@@ -20,7 +20,7 @@ Instead of pixel-wise detection, we analyze **connected deforestation events** a
 Different drivers (e.g., agriculture, roads, logging) produce distinct spatial patterns.  
 These patterns can be discovered **without labels** using morphology alone.
 
----
+
 
 ## Method
 
@@ -44,7 +44,7 @@ Compute geometric features for each event:
 - No predefined number of clusters
 - Outliers handled as noise
 
----
+
 
 ## Results
 
@@ -70,7 +70,7 @@ Compute geometric features for each event:
 
 > Note: These are interpretations, not labeled ground truth.
 
----
+
 
 ## Generalization
 
@@ -78,7 +78,7 @@ Compute geometric features for each event:
 - Structure persists (with increased noise)
 - Suggests archetypes are not dataset-specific
 
----
+
 
 ## Exploratory Risk Model
 
@@ -87,24 +87,8 @@ Compute geometric features for each event:
 
 > ⚠️ Proxy labels derived from same feature space — not independent validation.
 
----
 
-## Limitations
 
-- No ground-truth driver labels  
-- Risk model is not independently validated  
-- Limited geographic diversity in development data  
-
----
-
-## Future Work
-
-- Align archetypes with labeled driver data  
-- Test across regions and time  
-- Build benchmark datasets  
-- Integrate into monitoring systems  
-
----
 
 ## Tech Stack
 
