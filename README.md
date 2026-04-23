@@ -136,6 +136,7 @@ deforestation-archetypes/
 |-- deforestation_archetypes_presentation.pptx
 |-- download_data.py
 |-- README.md
+|-- requirements.txt
 |-- SS24BC_SN24I_Deforestation Archetypes_Report.pdf
 |-- sn7_imagepair_manifest.csv
 |-- outputs/
@@ -197,9 +198,10 @@ The easiest way to run this project is in Google Colab.
 2. Rename the project folder to `deforestation_archetypes` if needed.
 3. Place the folder at `MyDrive/deforestation_archetypes` because the notebook and scripts use that exact path.
 4. Open `Deforestation_archetypes_clean.ipynb` in Google Colab.
-5. Mount Google Drive in Colab when prompted.
-6. Run the notebook cells in order from top to bottom.
-7. If the dataset is not already present in Drive, run the data download step first.
+5. Run the first notebook cell to install the dependencies listed in `requirements.txt`.
+6. Mount Google Drive in Colab when prompted.
+7. Run the remaining notebook cells in order from top to bottom.
+8. If the dataset is not already present in Drive, run the data download step first.
 
 Expected project location in Colab:
 
@@ -256,6 +258,8 @@ If you run this in Colab, install any missing Python packages in a setup cell be
 - torchvision
 - boto3
 
+The notebook now includes a first cell that installs these dependencies automatically from `requirements.txt`.
+
 ## Outputs
 
 Current clustering outputs are written under `outputs/archetypes/`, including:
@@ -269,5 +273,4 @@ Current clustering outputs are written under `outputs/archetypes/`, including:
 
 - Presentation slides: `deforestation_archetypes_presentation.pptx`
 - Final report: `SS24BC_SN24I_Deforestation Archetypes_Report.pdf`
-
 

@@ -1,0 +1,14 @@
+boto3
+botocore
+fiona
+hdbscan
+matplotlib
+numpy
+pandas
+rasterio
+scikit-image
+scikit-learn
+torch
+torchvision
+tqdm
+umap-learn
