@@ -2,35 +2,43 @@
 
 Unsupervised discovery of deforestation archetypes using event-level spatial morphology and clustering.
 
-
+---
 
 ## Overview
 
 Global forest monitoring systems (e.g., Hansen GFC) detect **where** and **when** forest loss occurs, but not **what kind** of loss it is.
 
 This project reframes deforestation as an **event-level pattern discovery problem**.  
-Instead of pixel-wise detection, we analyze **connected deforestation events** and uncover recurring **geometric archetypes** using unsupervised learning.
+Instead of pixel-wise detection, we analyze connected deforestation events and uncover recurring **geometric archetypes** using unsupervised learning.
 
+---
 
+## 📂 Dataset
 
-## Key Idea
+### Data Sources
 
-> Event shape encodes the underlying deforestation process.
+- **Hansen Global Forest Change (GFC)**
+  - Annual forest loss maps from Landsat imagery  
+  - Spatial resolution: **30 meters**
 
-Different drivers (e.g., agriculture, roads, logging) produce distinct spatial patterns.  
-These patterns can be discovered **without labels** using morphology alone.
+- **Sentinel-2 (optional refinement)**
+  - Higher resolution imagery (**10–20 meters**)
 
+---
 
+### Unit of Analysis
 
-## Method
+We convert pixel-level forest loss into **event-level patches**:
 
-### 1. Event Extraction
-- Input: Hansen Global Forest Change (30m)
-- Group connected pixels → **event patches**
-- Each patch = one deforestation event
+1. Forest loss map → binary raster  
+2. Connected components → group neighboring pixels  
+3. Event patch → one deforestation event  
 
-### 2. Feature Engineering
-Compute geometric features for each event:
+---
+
+### Feature Dataset
+
+Each event is represented using:
 
 - Area  
 - Compactness  
@@ -39,58 +47,119 @@ Compute geometric features for each event:
 - Edge Density  
 - Mask Fraction  
 
+---
+
+### Dataset Scale
+
+- Thousands of event patches  
+- Extended evaluation: **~15,000 global events**
+
+---
+
+### Access
+
+Full datasets and outputs:  
+https://drive.google.com/drive/folders/1JmSbuaztQJrZbZ-y1q3aQ5b4uqqN-6eX?usp=drive_link
+
+---
+
+## 💡 Key Idea
+
+> Event shape encodes the underlying deforestation process.
+
+Different drivers (e.g., agriculture, roads, logging) produce distinct spatial patterns.
+
+---
+
+## 🧠 Method
+
+### 1. Event Extraction
+- Hansen GFC → connected components  
+
+### 2. Feature Engineering
+- Compute geometric features per event  
+
 ### 3. Clustering
-- Algorithm: **HDBSCAN**
-- No predefined number of clusters
-- Outliers handled as noise
+- **HDBSCAN**
+- No predefined cluster count  
+- Handles noise  
 
+---
 
+## 📊 Results
 
-## Results
-
-- **14 clusters discovered**
-- **5.6% events classified as noise**
-- Clear separation in feature space (UMAP)
+- **14 clusters discovered**  
+- **5.6% noise**  
+- Clear separation (UMAP)
 
 ### Stability
-- Adjusted Rand Index (ARI): ~0.658  
-- Clusters consistent across runs
+- ARI ≈ **0.658**
 
 ### Learnability
-- kNN classification accuracy: **98.24%**
-- Archetypes are well-separated and predictable
+- kNN accuracy: **98.24%**
 
-### Interpretation (qualitative)
+---
 
-| Archetype   | Likely Process              |
-|------------|---------------------------|
-| Linear     | Roads & infrastructure     |
-| Blocky     | Agricultural clearing      |
-| Fragmented | Selective logging          |
+### Interpretation
 
-> Note: These are interpretations, not labeled ground truth.
+| Archetype   | Likely Process          |
+|------------|------------------------|
+| Linear     | Roads & infrastructure |
+| Blocky     | Agriculture            |
+| Fragmented | Logging                |
 
+> ⚠️ Interpretations, not ground truth.
 
+---
 
-## Generalization
+## 🌍 Generalization
 
 - Tested on **15,000-event global dataset**
-- Structure persists (with increased noise)
-- Suggests archetypes are not dataset-specific
+- Structure persists with noise
 
+---
 
-
-## Exploratory Risk Model
+## ⚠️ Risk Model (Exploratory)
 
 - ROC-AUC: **0.994**
-- Some archetypes align with higher-risk signals
 
-> ⚠️ Proxy labels derived from same feature space — not independent validation.
+> ⚠️ Not independent validation (same feature space)
 
+---
 
+## 📁 Repository Structure
 
+This repository is organized into three main components: pipeline code (`src/`), outputs (`outputs/`), and experiment notebook.
 
-## Tech Stack
+```
+.
+├── Deforestation_archetypes_clean.ipynb
+├── download_data.py
+├── sn7_imagepair_manifest.csv
+├── README.md
+
+├── src/
+│   ├── build_manifest_sn7.py
+│   ├── extract_events.py
+│   ├── step2_tile_pairs.py
+│   ├── step3_build_change_masks_from_geojson.py
+│   ├── step4_extract_events.py
+│   ├── step5_extract_event_features.py
+│   ├── step6_cluster_events.py
+│   └── step7_interpret_clusters.py
+
+├── outputs/
+│   ├── archetypes/
+│   │   ├── cluster_XX_gallery.png
+│   │   ├── cluster_XX_meanmask.png
+│   │   ├── cluster_stats.csv
+│   │   └── event_clusters_shapeonly.csv
+│   └── gallery/
+```
+
+---
+
+## ⚙️ Tech Stack
 
 - Python  
 - NumPy, Pandas  
@@ -101,7 +170,13 @@ Compute geometric features for each event:
 
 ---
 
-## Authors
+## 🚀 Key Takeaway
+
+> Deforestation is not random — it has structure that can be discovered and interpreted.
+
+---
+
+## 👤 Authors
 
 - Akash Sagi  
 - Sakethram Naidu  
